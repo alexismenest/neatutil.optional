@@ -1,0 +1,11 @@
+{
+  "name": "neatutil.optional",
+  "version": "1.0.0",
+  "description": "A TypeScript isomorphic adaptation of Java's Optional.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alexis Loïc A. Menest <alexis.menest@gmail.com>",
+  "license": "MIT"
+}
