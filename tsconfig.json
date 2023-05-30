@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    /* Language and Environment */
+    "lib": ["ES2022"],
+    "target": "ES2022",
+    
+    /* Modules */
+    "rootDir": "./src",
+    "moduleResolution": "node",
+    "module": "CommonJS",
+
+    /* Emit */
+    "outDir": "./dist",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    
+    /* Interop Constraints */
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /* Type Checking */
+    "strict": true
+  },
+  "include": ["./src/index.ts"]
+}
