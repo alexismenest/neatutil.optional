@@ -2,10 +2,61 @@
   "name": "neatutil.optional",
   "version": "1.0.0",
   "description": "A TypeScript isomorphic adaptation of Java's Optional.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "Alexis Loïc A. Menest <alexis.menest@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "keywords": [
+    "optional",
+    "java",
+    "util",
+    "java-optional",
+    "java-util-optional",
+    "optional-value",
+    "nullish",
+    "nullish-value",
+    "undefined",
+    "void 0",
+    "null"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexismenest/neatutil.optional.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alexismenest/neatutil.optional/issues"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "directories": {
+    "src": "src",
+    "test": "test"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "scripts": {
+    "build": "npm run clean && npm run build:cjs && npm run build:esm-umd",
+    "build:cjs": "tsc",
+    "build:esm-umd": "rollup --config",
+    "clean": "rimraf ./dist/*",
+    "lint": "eslint ./src",
+    "test": "jest --coverage",
+    "prepublishOnly": "npm run test && npm run build"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
 }
