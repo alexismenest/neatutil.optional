@@ -1,6 +1,6 @@
 # NeatUtil.Optional
 
-A TypeScript isomorphic adaptation of Java's [Optional](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html/).
+A TypeScript isomorphic adaptation of Java's [Optional](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html).
 
 All methods of Java's `Optional` class are implemented except for `hashCode` and `stream`.
 
@@ -56,24 +56,24 @@ A container object which may or may not contain a non-`nullish` value. If a valu
 
 Additional methods that depend on the presence or absence of a contained value are provided, such as `orElse()` (returns a default value if no value is present) and `ifPresent()` (performs an action if a value is present).
 
-This is a value-based class; programmers should treat instances that are equal as interchangeable.
+This is a value-based class; instances that are equal should be treated as interchangeable.
 
 `Optional` is primarily intended for use as a method return type where there is a clear need to represent "no result", and where using `null` or `undefined` is likely to cause errors. A variable whose type is `Optional` should never itself be `null` or `undefined`; it should always point to an `Optional` instance.
 
-**Template Parameters:**
+**Type Parameters:**
 
 `TValue` - The type of value.
 
 ---
 
 ```typescript
-static empty<TEValue>(): Optional<TEValue>
+static empty<TValue>(): Optional<TValue>
 ```
 Returns an empty `Optional` instance. No value is present for this `Optional`.
 
-**Template Parameters:**
+**Type Parameters:**
 
-`TEValue` - The type of value.
+`TValue` - The type of value.
 
 **Returns:**
 
@@ -82,13 +82,13 @@ An empty `Optional` instance.
 ---
 
 ```typescript
-static of<TOValue>(value: TOValue): Optional<TOValue>
+static of<TValue>(value: TValue): Optional<TValue>
 ```
 Returns an `Optional` instance describing the given non-`nullish` value.
 
-**Template Parameters:**
+**Type Parameters:**
 
-`TOValue` - The type of value.
+`TValue` - The type of value.
 
 **Parameters:**
 
@@ -105,13 +105,13 @@ An `Optional` instance with the value present.
 ---
 
 ```typescript
-static ofNullable<TONValue>(value?: TONValue): Optional<TONValue>
+static ofNullable<TValue>(value?: TValue): Optional<TValue>
 ```
 Returns an `Optional` instance describing the given value, if non-`nullish`, otherwise returns an empty `Optional` instance.
 
-**Template Parameters:**
+**Type Parameters:**
 
-`TONValue` - The type of value.
+`TValue` - The type of value.
 
 **Parameters:**
 
@@ -162,13 +162,13 @@ An `Optional` instance describing the value of this `Optional`, if a value is pr
 ---
 
 ```typescript
-flatMap<TMValue>(mapper: (value: TValue) => Optional<TMValue>): Optional<TMValue>
+flatMap<UValue>(mapper: (value: TValue) => Optional<UValue>): Optional<UValue>
 ```
 If a value is present, returns the result of applying the given `Optional`-bearing mapping `function` to the value, otherwise returns an empty `Optional` instance.
 
-**Template Parameters:**
+**Type Parameters:**
 
-`TMValue` - The type of value of the `Optional` instance returned by the mapping `function`.
+`UValue` - The type of value of the `Optional` instance returned by the mapping `function`.
 
 **Parameters:**
 
@@ -254,13 +254,13 @@ If a value is present, returns `true`, otherwise `false`.
 ---
 
 ```typescript
-map<TMValue>(mapper: (value: TValue) => TMValue): Optional<TMValue>
+map<UValue>(mapper: (value: TValue) => UValue): Optional<UValue>
 ```
 If a value is present, returns an `Optional` instance describing the result of applying the given mapping `function` to the value, otherwise returns an empty `Optional` instance.
 
-**Template Parameters:**
+**Type Parameters:**
 
-`TMValue` - The type of the value returned from the mapping `function`.
+`UValue` - The type of the value returned from the mapping `function`.
 
 **Parameters:**
 
@@ -345,13 +345,13 @@ The non-`nullish` value described by this `Optional`.
 ---
 
 ```typescript
-orElseGetThrow<TSError extends Error>(errorSupplier: () => TSError): TValue
+orElseGetThrow<TError extends Error>(errorSupplier: () => TError): TValue
 ```
 If a value is present, returns the value, otherwise throws an error produced by the error supplying `function`.
 
-**Template Parameters:**
+**Type Parameters:**
 
-`TSError` - Type of the error to be thrown.
+`TError` - Type of the error to be thrown.
 
 **Parameters:**
 
@@ -363,7 +363,7 @@ The value, if present.
 
 **Throws:**
 
-`TSError` - If no value is present.
+`TError` - If no value is present.
 
 `TypeError` - If `errorSupplier` is not a `function` or does not return an `Error` instance.
 
