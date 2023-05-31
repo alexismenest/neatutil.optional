@@ -20,21 +20,15 @@ const VALUE_NOT_PRESENT = 'value not present';
 const INVALID_ARGUMENT_TYPE_FOR_PARAMETER = `${INVALID} argument ${TYPE_FOR} parameter `;
 const INVALID_RETURN_TYPE_FOR_METHOD = `${INVALID} return ${TYPE_FOR} method `;
 
-function isFunction(value: unknown): boolean {
-  return typeof value === 'function';
-}
+const isFunction = (value: unknown): boolean => typeof value === 'function';
 
-function isNullish(value: unknown): boolean {
-  return value === null || value === undefined;
-}
+const isNullish = (value: unknown): boolean => value === null || value === undefined;
 
-function invalidArgTypeErrorMessage(strings: TemplateStringsArray, paramNameExp: string, typeExp: string): string {
-  return `${INVALID_ARGUMENT_TYPE_FOR_PARAMETER}${paramNameExp}${EXPECTED}${typeExp}`;
-}
+const invalidArgTypeErrorMessage = (strings: TemplateStringsArray, paramNameExp: string, typeExp: string): string =>
+  `${INVALID_ARGUMENT_TYPE_FOR_PARAMETER}${paramNameExp}${EXPECTED}${typeExp}`;
 
-function invalidReturnTypeErrorMessage(strings: TemplateStringsArray, funcNameExp: string, typeExp: string): string {
-  return `${INVALID_RETURN_TYPE_FOR_METHOD}${funcNameExp}${EXPECTED}${typeExp}`;
-}
+const invalidReturnTypeErrorMessage = (strings: TemplateStringsArray, funcNameExp: string, typeExp: string): string =>
+  `${INVALID_RETURN_TYPE_FOR_METHOD}${funcNameExp}${EXPECTED}${typeExp}`;
 
 /**
  * A container object which may or may not contain a non-`nullish` value.
@@ -59,40 +53,40 @@ export class Optional<TValue> {
   /**
    * Returns an empty `Optional` instance. No value is present for this `Optional`.
    *
-   * @template TEValue The type of value.
-   * @returns {Optional<TEValue>} An empty `Optional` instance.
+   * @template TValue The type of value.
+   * @returns {Optional<TValue>} An empty `Optional` instance.
    */
-  public static empty<TEValue>(): Optional<TEValue> {
-    return Optional.#EMPTY_INSTANCE as Optional<TEValue>;
+  public static empty<TValue>(): Optional<TValue> {
+    return Optional.#EMPTY_INSTANCE as Optional<TValue>;
   }
 
   /**
    * Returns an `Optional` instance describing the given non-`nullish` value.
    *
-   * @template TOValue The type of value.
-   * @param {TOValue} value The value to describe, which must be non-`nullish`.
-   * @returns {Optional<TOValue>} An `Optional` instance with the value present.
+   * @template TValue The type of value.
+   * @param {TValue} value The value to describe, which must be non-`nullish`.
+   * @returns {Optional<TValue>} An `Optional` instance with the value present.
    * @throws {TypeError} If value is `nullish`.
    */
-  public static of<TOValue>(value: TOValue): Optional<TOValue> {
+  public static of<TValue>(value: TValue): Optional<TValue> {
     if (isNullish(value) === true) {
       throw new TypeError(invalidArgTypeErrorMessage`${VALUE}${NON_NULLISH}`);
     }
 
-    return new Optional<TOValue>(value);
+    return new Optional<TValue>(value);
   }
 
   /**
    * Returns an `Optional` instance describing the given value, if non-`nullish`, 
    * otherwise returns an empty `Optional` instance.
    *
-   * @template TONValue The type of value.
-   * @param {TONValue} value The possibly-`nullish` value to describe.
-   * @returns {Optional<TONValue>} An `Optional` instance with a present value if the specified value is non-`nullish`, 
+   * @template TValue The type of value.
+   * @param {TValue} value The possibly-`nullish` value to describe.
+   * @returns {Optional<TValue>} An `Optional` instance with a present value if the specified value is non-`nullish`, 
    * otherwise an empty `Optional` instance.
    */
-  public static ofNullable<TONValue>(value?: TONValue): Optional<TONValue> {
-    return isNullish(value) === true ? Optional.#EMPTY_INSTANCE as Optional<TONValue> : new Optional<TONValue>(value);
+  public static ofNullable<TValue>(value?: TValue): Optional<TValue> {
+    return isNullish(value) === true ? Optional.#EMPTY_INSTANCE as Optional<TValue> : new Optional<TValue>(value);
   }
 
   /**
@@ -138,13 +132,13 @@ export class Optional<TValue> {
    * If a value is present, returns the result of applying the given `Optional`-bearing 
    * mapping `function` to the value, otherwise returns an empty `Optional` instance.
    *
-   * @template TMValue The type of value of the `Optional` instance returned by the mapping `function`.
-   * @param {(value: TValue) => Optional<TMValue>} mapper The mapping `function` to apply to the value, if present.
-   * @returns {Optional<TMValue>} The result of applying an `Optional`-bearing mapping `function` to the value of 
+   * @template UValue The type of value of the `Optional` instance returned by the mapping `function`.
+   * @param {(value: TValue) => Optional<UValue>} mapper The mapping `function` to apply to the value, if present.
+   * @returns {Optional<UValue>} The result of applying an `Optional`-bearing mapping `function` to the value of 
    * this `Optional`, if a value is present, otherwise an empty `Optional` instance.
    * @throws {TypeError} If `mapper` is not a `function` or does not return an `Optional` instance.
    */
-  public flatMap<TMValue>(mapper: (value: TValue) => Optional<TMValue>): Optional<TMValue> {
+  public flatMap<UValue>(mapper: (value: TValue) => Optional<UValue>): Optional<UValue> {
     if (isFunction(mapper) === false) {
       throw new TypeError(invalidArgTypeErrorMessage`${MAPPER}${FUNCTION}`);
     }
@@ -159,7 +153,7 @@ export class Optional<TValue> {
       return mappingResult;
     }
 
-    return Optional.empty<TMValue>();
+    return Optional.empty<UValue>();
   }
 
   /**
@@ -239,22 +233,22 @@ export class Optional<TValue> {
    * the result of applying the given mapping `function` to the value, 
    * otherwise returns an empty `Optional` instance.
    *
-   * @template TMValue The type of the value returned from the mapping `function`.
-   * @param {(value: TValue) => TMValue} mapper The mapping `function` to apply to a value, if present.
-   * @returns {Optional<TMValue>} An `Optional` instance describing the result of applying a mapping `function` 
+   * @template UValue The type of the value returned from the mapping `function`.
+   * @param {(value: TValue) => UValue} mapper The mapping `function` to apply to a value, if present.
+   * @returns {Optional<UValue>} An `Optional` instance describing the result of applying a mapping `function` 
    * to the value of this `Optional`, if a value is present, otherwise an empty `Optional` instance.
    * @throws {TypeError} If `mapper` is not a `function`.
    */
-  public map<TMValue>(mapper: (value: TValue) => TMValue): Optional<TMValue> {
+  public map<UValue>(mapper: (value: TValue) => UValue): Optional<UValue> {
     if (isFunction(mapper) === false) {
       throw new TypeError(invalidArgTypeErrorMessage`${MAPPER}${FUNCTION}`);
     }
 
     if (this.isPresent() === true) {
-      return Optional.ofNullable<TMValue>(mapper(this.#value as TValue));
+      return Optional.ofNullable<UValue>(mapper(this.#value as TValue));
     }
 
-    return Optional.empty<TMValue>();
+    return Optional.empty<UValue>();
   }
 
   /**
@@ -332,13 +326,13 @@ export class Optional<TValue> {
   /**
    * If a value is present, returns the value, otherwise throws an error produced by the error supplying `function`.
    *
-   * @template TSError Type of the error to be thrown.
-   * @param {() => TSError} errorSupplier The supplying `function` that produces an error to be thrown.
+   * @template TError Type of the error to be thrown.
+   * @param {() => TError} errorSupplier The supplying `function` that produces an error to be thrown.
    * @returns {TValue} The value, if present.
-   * @throws {TSError} If no value is present.
+   * @throws {TError} If no value is present.
    * @throws {TypeError} If `errorSupplier` is not a `function` or does not return an `Error` instance.
    */
-  public orElseGetThrow<TSError extends Error>(errorSupplier: () => TSError): TValue {
+  public orElseGetThrow<TError extends Error>(errorSupplier: () => TError): TValue {
     if (isFunction(errorSupplier) === false) {
       throw new TypeError(invalidArgTypeErrorMessage`${ERROR_SUPPLIER}${FUNCTION}`);
     }
