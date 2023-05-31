@@ -1,4 +1,5 @@
 # NeatUtil.Optional
+[![Build](https://github.com/alexismenest/neatutil.optional/actions/workflows/build.yml/badge.svg)](https://github.com/alexismenest/neatutil.optional/actions/workflows/build.yml)
 
 A TypeScript isomorphic adaptation of Java's [Optional](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html).
 
