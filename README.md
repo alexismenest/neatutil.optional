@@ -55,8 +55,6 @@ Optional<TValue>
 ```
 A container object which may or may not contain a non-`nullish` value. If a value is present, `isPresent()` returns `true`. If no value is present, the object is considered empty and `isPresent()` returns `false`.
 
-Additional methods that depend on the presence or absence of a contained value are provided, such as `orElse()` (returns a default value if no value is present) and `ifPresent()` (performs an action if a value is present).
-
 This is a value-based class; instances that are equal should be treated as interchangeable.
 
 `Optional` is primarily intended for use as a method return type where there is a clear need to represent "no result", and where using `null` or `undefined` is likely to cause errors. A variable whose type is `Optional` should never itself be `null` or `undefined`; it should always point to an `Optional` instance.

@@ -1,24 +1,22 @@
 import isEqual from 'lodash.isequal';
 
-const ACTION = '"action"';
-const EMPTY_ACTION = '"emptyAction"';
+const ACTION_PARAMETER = '"action"';
+const EMPTY_ACTION_PARAMETER = '"emptyAction"';
 const EXPECTED = '; expected: ';
-const ERROR = '"Error"';
-const ERROR_SUPPLIER = '"errorSupplier"';
-const FUNCTION = '"function"';
-const INVALID = 'invalid';
-const MAPPER = '"mapper"';
-const NON_NULLISH = '"non-nullish"';
-const OPTIONAL = '"Optional"';
-const OPTIONAL_TS = 'Optional';
+const ERROR_TYPE = '"Error"';
+const ERROR_SUPPLIER_PARAMETER = '"errorSupplier"';
+const FUNCTION_TYPE = '"function"';
+const INVALID_ARGUMENT_TYPE_FOR_PARAMETER = 'invalid argument type for parameter ';
+const INVALID_RETURN_TYPE_FOR_FUNCTION = 'invalid return type for function ';
+const MAPPER_PARAMETER = '"mapper"';
+const NON_NULLISH_TYPE = '"non-nullish"';
+const OPTIONAL = 'Optional';
+const OPTIONAL_TYPE = '"Optional"';
 const OPTIONAL_EMPTY = 'Optional.empty';
-const PREDICATE = '"predicate"';
-const SUPPLIER = '"supplier"';
-const TYPE_FOR = 'type for';
-const VALUE = '"value"';
+const PREDICATE_PARAMETER = '"predicate"';
+const SUPPLIER_PARAMETER = '"supplier"';
+const VALUE_PARAMETER = '"value"';
 const VALUE_NOT_PRESENT = 'value not present';
-const INVALID_ARGUMENT_TYPE_FOR_PARAMETER = `${INVALID} argument ${TYPE_FOR} parameter `;
-const INVALID_RETURN_TYPE_FOR_METHOD = `${INVALID} return ${TYPE_FOR} method `;
 
 const isFunction = (value: unknown): boolean => typeof value === 'function';
 
@@ -28,7 +26,7 @@ const invalidArgTypeErrorMessage = (strings: TemplateStringsArray, paramNameExp:
   `${INVALID_ARGUMENT_TYPE_FOR_PARAMETER}${paramNameExp}${EXPECTED}${typeExp}`;
 
 const invalidReturnTypeErrorMessage = (strings: TemplateStringsArray, funcNameExp: string, typeExp: string): string =>
-  `${INVALID_RETURN_TYPE_FOR_METHOD}${funcNameExp}${EXPECTED}${typeExp}`;
+  `${INVALID_RETURN_TYPE_FOR_FUNCTION}${funcNameExp}${EXPECTED}${typeExp}`;
 
 /**
  * A container object which may or may not contain a non-`nullish` value.
@@ -70,7 +68,7 @@ export class Optional<TValue> {
    */
   public static of<TValue>(value: TValue): Optional<TValue> {
     if (isNullish(value) === true) {
-      throw new TypeError(invalidArgTypeErrorMessage`${VALUE}${NON_NULLISH}`);
+      throw new TypeError(invalidArgTypeErrorMessage`${VALUE_PARAMETER}${NON_NULLISH_TYPE}`);
     }
 
     return new Optional<TValue>(value);
@@ -118,7 +116,7 @@ export class Optional<TValue> {
    */
   public filter(predicate: (value: TValue) => boolean): Optional<TValue> {
     if (isFunction(predicate) === false) {
-      throw new TypeError(invalidArgTypeErrorMessage`${PREDICATE}${FUNCTION}`);
+      throw new TypeError(invalidArgTypeErrorMessage`${PREDICATE_PARAMETER}${FUNCTION_TYPE}`);
     }
 
     if ((this.isPresent() === true) && (predicate(this.#value as TValue) === true)) {
@@ -140,14 +138,14 @@ export class Optional<TValue> {
    */
   public flatMap<UValue>(mapper: (value: TValue) => Optional<UValue>): Optional<UValue> {
     if (isFunction(mapper) === false) {
-      throw new TypeError(invalidArgTypeErrorMessage`${MAPPER}${FUNCTION}`);
+      throw new TypeError(invalidArgTypeErrorMessage`${MAPPER_PARAMETER}${FUNCTION_TYPE}`);
     }
 
     if (this.isPresent() === true) {
       const mappingResult = mapper(this.#value as TValue);
 
       if ((mappingResult instanceof Optional) === false) {
-        throw new TypeError(invalidReturnTypeErrorMessage`${MAPPER}${OPTIONAL}`);
+        throw new TypeError(invalidReturnTypeErrorMessage`${MAPPER_PARAMETER}${OPTIONAL_TYPE}`);
       }
 
       return mappingResult;
@@ -178,7 +176,7 @@ export class Optional<TValue> {
    */
   public ifPresent(action: (value: TValue) => void): void {
     if (isFunction(action) === false) {
-      throw new TypeError(invalidArgTypeErrorMessage`${ACTION}${FUNCTION}`);
+      throw new TypeError(invalidArgTypeErrorMessage`${ACTION_PARAMETER}${FUNCTION_TYPE}`);
     }
 
     if (this.isPresent() === true) {
@@ -196,11 +194,11 @@ export class Optional<TValue> {
    */
   public ifPresentOrElse(action: (value: TValue) => void, emptyAction: () => void): void {
     if (isFunction(action) === false) {
-      throw new TypeError(invalidArgTypeErrorMessage`${ACTION}${FUNCTION}`);
+      throw new TypeError(invalidArgTypeErrorMessage`${ACTION_PARAMETER}${FUNCTION_TYPE}`);
     }
 
     if (isFunction(emptyAction) === false) {
-      throw new TypeError(invalidArgTypeErrorMessage`${EMPTY_ACTION}${FUNCTION}`);
+      throw new TypeError(invalidArgTypeErrorMessage`${EMPTY_ACTION_PARAMETER}${FUNCTION_TYPE}`);
     }
 
     if (this.isPresent() === true) {
@@ -241,7 +239,7 @@ export class Optional<TValue> {
    */
   public map<UValue>(mapper: (value: TValue) => UValue): Optional<UValue> {
     if (isFunction(mapper) === false) {
-      throw new TypeError(invalidArgTypeErrorMessage`${MAPPER}${FUNCTION}`);
+      throw new TypeError(invalidArgTypeErrorMessage`${MAPPER_PARAMETER}${FUNCTION_TYPE}`);
     }
 
     if (this.isPresent() === true) {
@@ -262,7 +260,7 @@ export class Optional<TValue> {
    */
   public or(supplier: () => Optional<TValue>): Optional<TValue> {
     if (isFunction(supplier) === false) {
-      throw new TypeError(invalidArgTypeErrorMessage`${SUPPLIER}${FUNCTION}`);
+      throw new TypeError(invalidArgTypeErrorMessage`${SUPPLIER_PARAMETER}${FUNCTION_TYPE}`);
     }
 
     if (this.isPresent() === true) {
@@ -272,7 +270,7 @@ export class Optional<TValue> {
     const supplyingResult = supplier();
 
     if ((supplyingResult instanceof Optional) === false) {
-      throw new TypeError(invalidReturnTypeErrorMessage`${SUPPLIER}${OPTIONAL}`);
+      throw new TypeError(invalidReturnTypeErrorMessage`${SUPPLIER_PARAMETER}${OPTIONAL_TYPE}`);
     }
 
     return supplyingResult;
@@ -297,7 +295,7 @@ export class Optional<TValue> {
    */
   public orElseGet(supplier: () => TValue | null): TValue | null {
     if (isFunction(supplier) === false) {
-      throw new TypeError(invalidArgTypeErrorMessage`${SUPPLIER}${FUNCTION}`);
+      throw new TypeError(invalidArgTypeErrorMessage`${SUPPLIER_PARAMETER}${FUNCTION_TYPE}`);
     }
 
     if (this.isPresent() === true) {
@@ -334,14 +332,14 @@ export class Optional<TValue> {
    */
   public orElseGetThrow<TError extends Error>(errorSupplier: () => TError): TValue {
     if (isFunction(errorSupplier) === false) {
-      throw new TypeError(invalidArgTypeErrorMessage`${ERROR_SUPPLIER}${FUNCTION}`);
+      throw new TypeError(invalidArgTypeErrorMessage`${ERROR_SUPPLIER_PARAMETER}${FUNCTION_TYPE}`);
     }
 
     if (this.isPresent() === false) {
       const supplyingResult = errorSupplier();
 
       if ((supplyingResult instanceof Error) === false) {
-        throw new TypeError(invalidReturnTypeErrorMessage`${ERROR_SUPPLIER}${ERROR}`);
+        throw new TypeError(invalidReturnTypeErrorMessage`${ERROR_SUPPLIER_PARAMETER}${ERROR_TYPE}`);
       }
 
       throw supplyingResult;
@@ -356,6 +354,6 @@ export class Optional<TValue> {
    * @returns {string} The `string` representation of this instance.
    */
   public toString(): string {
-    return this.isPresent() === true ? `${OPTIONAL_TS}[${this.#value}]` : OPTIONAL_EMPTY;
+    return this.isPresent() === true ? `${OPTIONAL}[${this.#value}]` : OPTIONAL_EMPTY;
   }
 }

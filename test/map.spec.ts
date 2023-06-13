@@ -36,22 +36,22 @@ describe('instance method "map"', () => {
   test('calling with a non-function argument throws', () => {
     const nullArg = null;
     const objectArg = {};
-    const error = new TypeError('invalid argument type for parameter "mapper"; expected: "function"');
+    const errorThrown = new TypeError('invalid argument type for parameter "mapper"; expected: "function"');
     const emptyInstance = Optional.empty();
-    const nonEmptyInstance = Optional.of<string>('');
+    const nonEmptyInstance = Optional.of<number>(5);
 
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.map()).toThrow(error);
+    expect(() => emptyInstance.map()).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.map(nullArg)).toThrow(error);
+    expect(() => emptyInstance.map(nullArg)).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.map(objectArg)).toThrow(error);
+    expect(() => emptyInstance.map(objectArg)).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.map<string>()).toThrow(error);
+    expect(() => nonEmptyInstance.map<string>()).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.map<string>(nullArg)).toThrow(error);
+    expect(() => nonEmptyInstance.map<string>(nullArg)).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.map<string>(objectArg)).toThrow(error);
+    expect(() => nonEmptyInstance.map<string>(objectArg)).toThrow(errorThrown);
   });
 
   test('calling on an non-empty instance with a nullish returning function argument returns an empty instance', () => {

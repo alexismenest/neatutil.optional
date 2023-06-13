@@ -39,42 +39,42 @@ describe('instance method "ifPresentOrElse"', () => {
     const emptyAction = () => { console.log(); };
     const nullArg = null;
     const objectArg = {};
-    const actionError = new TypeError('invalid argument type for parameter "action"; expected: "function"');
-    const emptyActionError = new TypeError('invalid argument type for parameter "emptyAction"; expected: "function"');
+    const actionErrorThrown = new TypeError('invalid argument type for parameter "action"; expected: "function"');
+    const emptyActionErrorThrown = new TypeError('invalid argument type for parameter "emptyAction"; expected: "function"');
     const emptyInstance = Optional.empty();
     const nonEmptyInstance = Optional.of<string>('');
 
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.ifPresentOrElse()).toThrow(actionError);
+    expect(() => emptyInstance.ifPresentOrElse()).toThrow(actionErrorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.ifPresentOrElse(nullArg)).toThrow(actionError);
+    expect(() => emptyInstance.ifPresentOrElse(nullArg)).toThrow(actionErrorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.ifPresentOrElse(nullArg, emptyAction)).toThrow(actionError);
+    expect(() => emptyInstance.ifPresentOrElse(nullArg, emptyAction)).toThrow(actionErrorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.ifPresentOrElse(objectArg)).toThrow(actionError);
+    expect(() => emptyInstance.ifPresentOrElse(objectArg)).toThrow(actionErrorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.ifPresentOrElse(objectArg, emptyAction)).toThrow(actionError);
+    expect(() => emptyInstance.ifPresentOrElse(objectArg, emptyAction)).toThrow(actionErrorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.ifPresentOrElse(action)).toThrow(emptyActionError);
+    expect(() => emptyInstance.ifPresentOrElse(action)).toThrow(emptyActionErrorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.ifPresentOrElse(action, nullArg)).toThrow(emptyActionError);
+    expect(() => emptyInstance.ifPresentOrElse(action, nullArg)).toThrow(emptyActionErrorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.ifPresentOrElse(action, objectArg)).toThrow(emptyActionError);
+    expect(() => emptyInstance.ifPresentOrElse(action, objectArg)).toThrow(emptyActionErrorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.ifPresentOrElse()).toThrow(actionError);
+    expect(() => nonEmptyInstance.ifPresentOrElse()).toThrow(actionErrorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.ifPresentOrElse(nullArg)).toThrow(actionError);
+    expect(() => nonEmptyInstance.ifPresentOrElse(nullArg)).toThrow(actionErrorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.ifPresentOrElse(nullArg, emptyAction)).toThrow(actionError);
+    expect(() => nonEmptyInstance.ifPresentOrElse(nullArg, emptyAction)).toThrow(actionErrorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.ifPresentOrElse(objectArg)).toThrow(actionError);
+    expect(() => nonEmptyInstance.ifPresentOrElse(objectArg)).toThrow(actionErrorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.ifPresentOrElse(objectArg, emptyAction)).toThrow(actionError);
+    expect(() => nonEmptyInstance.ifPresentOrElse(objectArg, emptyAction)).toThrow(actionErrorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.ifPresentOrElse(action)).toThrow(emptyActionError);
+    expect(() => nonEmptyInstance.ifPresentOrElse(action)).toThrow(emptyActionErrorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.ifPresentOrElse(action, nullArg)).toThrow(emptyActionError);
+    expect(() => nonEmptyInstance.ifPresentOrElse(action, nullArg)).toThrow(emptyActionErrorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.ifPresentOrElse(action, objectArg)).toThrow(emptyActionError);
+    expect(() => nonEmptyInstance.ifPresentOrElse(action, objectArg)).toThrow(emptyActionErrorThrown);
   });
 });

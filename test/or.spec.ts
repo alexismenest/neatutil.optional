@@ -35,31 +35,31 @@ describe('instance method "or"', () => {
   test('calling with a non-function argument throws', () => {
     const nullArg = null;
     const objectArg = {};
-    const error = new TypeError('invalid argument type for parameter "supplier"; expected: "function"');
+    const errorThrown = new TypeError('invalid argument type for parameter "supplier"; expected: "function"');
     const emptyInstance = Optional.empty();
     const nonEmptyInstance = Optional.of<string>('');
 
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.or()).toThrow(error);
+    expect(() => emptyInstance.or()).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.or(nullArg)).toThrow(error);
+    expect(() => emptyInstance.or(nullArg)).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.or(objectArg)).toThrow(error);
+    expect(() => emptyInstance.or(objectArg)).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.or()).toThrow(error);
+    expect(() => nonEmptyInstance.or()).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.or(nullArg)).toThrow(error);
+    expect(() => nonEmptyInstance.or(nullArg)).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.or(objectArg)).toThrow(error);
+    expect(() => nonEmptyInstance.or(objectArg)).toThrow(errorThrown);
   });
 
   test('calling on an empty instance with a function argument that does not return an "Optional" instance throws', () => {
-    const error = new TypeError('invalid return type for method "supplier"; expected: "Optional"');
+    const errorThrown = new TypeError('invalid return type for function "supplier"; expected: "Optional"');
     const nonOptionalReturningSupplier = jest.fn(() => '');
     const emptyInstance = Optional.empty();
 
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.or(nonOptionalReturningSupplier)).toThrow(error);
+    expect(() => emptyInstance.or(nonOptionalReturningSupplier)).toThrow(errorThrown);
     expect(nonOptionalReturningSupplier).toHaveBeenCalledTimes(1);
     expect(nonOptionalReturningSupplier).toHaveReturnedWith('');
   });

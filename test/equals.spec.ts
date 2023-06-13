@@ -25,13 +25,13 @@ describe('instance method "equals"', () => {
     
     expect(emptyInstance.equals(firstNonEmptyInstance)).toBe(false);
     expect(emptyInstance.equals(secondNonEmptyInstance)).toBe(false);
-    // @ts-ignore
+    // @ts-ignore: Testing wrong argument type
     expect(firstNonEmptyInstance.equals(emptyInstance)).toBe(false);
-    // @ts-ignore
+    // @ts-ignore: Testing wrong argument type
     expect(firstNonEmptyInstance.equals(secondNonEmptyInstance)).toBe(false);
-    // @ts-ignore
+    // @ts-ignore: Testing wrong argument type
     expect(secondNonEmptyInstance.equals(emptyInstance)).toBe(false);
-    // @ts-ignore
+    // @ts-ignore: Testing wrong argument type
     expect(secondNonEmptyInstance.equals(firstNonEmptyInstance)).toBe(false);
   });
 

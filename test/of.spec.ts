@@ -16,11 +16,11 @@ describe('static method "of"', () => {
   });
 
   test('calling with a nullish value argument throws', () => {
-    const error = new TypeError('invalid argument type for parameter "value"; expected: "non-nullish"');
+    const errorThrown = new TypeError('invalid argument type for parameter "value"; expected: "non-nullish"');
 
     // @ts-expect-error: Testing wrong argument type
-    expect(() => Optional.of<undefined>()).toThrow(error);
-    expect(() => Optional.of<undefined>(void 0)).toThrow(error);
-    expect(() => Optional.of<null>(null)).toThrow(error);
+    expect(() => Optional.of<undefined>()).toThrow(errorThrown);
+    expect(() => Optional.of<undefined>(void 0)).toThrow(errorThrown);
+    expect(() => Optional.of<null>(null)).toThrow(errorThrown);
   });
 });

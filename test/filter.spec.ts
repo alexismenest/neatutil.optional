@@ -49,21 +49,21 @@ describe('instance method "filter"', () => {
   test('calling with a non-function argument throws', () => {
     const nullArg = null;
     const objectArg = {};
-    const error = new TypeError('invalid argument type for parameter "predicate"; expected: "function"');
+    const errorThrown = new TypeError('invalid argument type for parameter "predicate"; expected: "function"');
     const emptyInstance = Optional.empty();
     const nonEmptyInstance = Optional.of<string>('');
 
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.filter()).toThrow(error);
+    expect(() => emptyInstance.filter()).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.filter(nullArg)).toThrow(error);
+    expect(() => emptyInstance.filter(nullArg)).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.filter(objectArg)).toThrow(error);
+    expect(() => emptyInstance.filter(objectArg)).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.filter()).toThrow(error);
+    expect(() => nonEmptyInstance.filter()).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.filter(nullArg)).toThrow(error);
+    expect(() => nonEmptyInstance.filter(nullArg)).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.filter(objectArg)).toThrow(error);
+    expect(() => nonEmptyInstance.filter(objectArg)).toThrow(errorThrown);
   });
 });

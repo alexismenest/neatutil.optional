@@ -29,31 +29,31 @@ describe('instance method "orElseGetThrow"', () => {
   test('calling with a non-function argument throws', () => {
     const nullArg = null;
     const objectArg = {};
-    const error = new TypeError('invalid argument type for parameter "errorSupplier"; expected: "function"');
+    const errorThrown = new TypeError('invalid argument type for parameter "errorSupplier"; expected: "function"');
     const emptyInstance = Optional.empty();
     const nonEmptyInstance = Optional.of<string>('');
 
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.orElseGetThrow<Error>()).toThrow(error);
+    expect(() => emptyInstance.orElseGetThrow<Error>()).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.orElseGetThrow<Error>(nullArg)).toThrow(error);
+    expect(() => emptyInstance.orElseGetThrow<Error>(nullArg)).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.orElseGetThrow<Error>(objectArg)).toThrow(error);
+    expect(() => emptyInstance.orElseGetThrow<Error>(objectArg)).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.orElseGetThrow<Error>()).toThrow(error);
+    expect(() => nonEmptyInstance.orElseGetThrow<Error>()).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.orElseGetThrow<Error>(nullArg)).toThrow(error);
+    expect(() => nonEmptyInstance.orElseGetThrow<Error>(nullArg)).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.orElseGetThrow<Error>(objectArg)).toThrow(error);
+    expect(() => nonEmptyInstance.orElseGetThrow<Error>(objectArg)).toThrow(errorThrown);
   });
 
   test('calling on an empty instance with a function argument that does not return an "Error" instance throws', () => {
-    const error = new TypeError('invalid return type for method "errorSupplier"; expected: "Error"');
+    const errorThrown = new TypeError('invalid return type for function "errorSupplier"; expected: "Error"');
     const nonErrorReturningSupplier = jest.fn(() => '');
     const emptyInstance = Optional.empty();
 
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.orElseGetThrow<Error>(nonErrorReturningSupplier)).toThrow(error);
+    expect(() => emptyInstance.orElseGetThrow<Error>(nonErrorReturningSupplier)).toThrow(errorThrown);
     expect(nonErrorReturningSupplier).toHaveBeenCalledTimes(1);
     expect(nonErrorReturningSupplier).toHaveReturnedWith('');
   });

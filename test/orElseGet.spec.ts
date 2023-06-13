@@ -39,21 +39,21 @@ describe('instance method "orElseGet"', () => {
   test('calling with a non-function argument throws', () => {
     const nullArg = null;
     const objectArg = {};
-    const error = new TypeError('invalid argument type for parameter "supplier"; expected: "function"');
+    const errorThrown = new TypeError('invalid argument type for parameter "supplier"; expected: "function"');
     const emptyInstance = Optional.empty();
     const nonEmptyInstance = Optional.of<string>('');
 
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.orElseGet()).toThrow(error);
+    expect(() => emptyInstance.orElseGet()).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.orElseGet(nullArg)).toThrow(error);
+    expect(() => emptyInstance.orElseGet(nullArg)).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.orElseGet(objectArg)).toThrow(error);
+    expect(() => emptyInstance.orElseGet(objectArg)).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.orElseGet()).toThrow(error);
+    expect(() => nonEmptyInstance.orElseGet()).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.orElseGet(nullArg)).toThrow(error);
+    expect(() => nonEmptyInstance.orElseGet(nullArg)).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.orElseGet(objectArg)).toThrow(error);
+    expect(() => nonEmptyInstance.orElseGet(objectArg)).toThrow(errorThrown);
   });
 });

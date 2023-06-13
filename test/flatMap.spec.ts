@@ -36,31 +36,31 @@ describe('instance method "flatMap"', () => {
   test('calling with a non-function argument throws', () => {
     const nullArg = null;
     const objectArg = {};
-    const error = new TypeError('invalid argument type for parameter "mapper"; expected: "function"');
+    const errorThrown = new TypeError('invalid argument type for parameter "mapper"; expected: "function"');
     const emptyInstance = Optional.empty();
-    const nonEmptyInstance = Optional.of<string>('');
+    const nonEmptyInstance = Optional.of<number>(5);
 
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.flatMap()).toThrow(error);
+    expect(() => emptyInstance.flatMap()).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.flatMap(nullArg)).toThrow(error);
+    expect(() => emptyInstance.flatMap(nullArg)).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.flatMap(objectArg)).toThrow(error);
+    expect(() => emptyInstance.flatMap(objectArg)).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.flatMap<string>()).toThrow(error);
+    expect(() => nonEmptyInstance.flatMap<string>()).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.flatMap<string>(nullArg)).toThrow(error);
+    expect(() => nonEmptyInstance.flatMap<string>(nullArg)).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.flatMap<string>(objectArg)).toThrow(error);
+    expect(() => nonEmptyInstance.flatMap<string>(objectArg)).toThrow(errorThrown);
   });
 
   test('calling on an non-empty instance with a function argument that does not return an "Optional" instance throws', () => {
-    const error = new TypeError('invalid return type for method "mapper"; expected: "Optional"');
+    const errorThrown = new TypeError('invalid return type for function "mapper"; expected: "Optional"');
     const nonOptionalReturningMapper = jest.fn((value: number) => `give me ${value}`);
     const nonEmptyInstance = Optional.of<number>(5);
 
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.flatMap<string>(nonOptionalReturningMapper)).toThrow(error);
+    expect(() => nonEmptyInstance.flatMap<string>(nonOptionalReturningMapper)).toThrow(errorThrown);
     expect(nonOptionalReturningMapper).toHaveBeenCalledTimes(1);
     expect(nonOptionalReturningMapper).toHaveBeenCalledWith(5);
     expect(nonOptionalReturningMapper).toHaveReturnedWith('give me 5');

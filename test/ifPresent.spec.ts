@@ -30,21 +30,21 @@ describe('instance method "ifPresent"', () => {
   test('calling with a non-function argument throws', () => {
     const nullArg = null;
     const objectArg = {};
-    const error = new TypeError('invalid argument type for parameter "action"; expected: "function"');
+    const errorThrown = new TypeError('invalid argument type for parameter "action"; expected: "function"');
     const emptyInstance = Optional.empty();
     const nonEmptyInstance = Optional.of<string>('');
 
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.ifPresent()).toThrow(error);
+    expect(() => emptyInstance.ifPresent()).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.ifPresent(nullArg)).toThrow(error);
+    expect(() => emptyInstance.ifPresent(nullArg)).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => emptyInstance.ifPresent(objectArg)).toThrow(error);
+    expect(() => emptyInstance.ifPresent(objectArg)).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.ifPresent()).toThrow(error);
+    expect(() => nonEmptyInstance.ifPresent()).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.ifPresent(nullArg)).toThrow(error);
+    expect(() => nonEmptyInstance.ifPresent(nullArg)).toThrow(errorThrown);
     // @ts-expect-error: Testing wrong argument type
-    expect(() => nonEmptyInstance.ifPresent(objectArg)).toThrow(error);
+    expect(() => nonEmptyInstance.ifPresent(objectArg)).toThrow(errorThrown);
   });
 });

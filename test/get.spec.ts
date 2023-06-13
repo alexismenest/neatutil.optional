@@ -14,9 +14,9 @@ describe('instance method "get"', () => {
   });
 
   test('calling on an empty instance throws', () => {
-    const error = new Error('value not present');
+    const errorThrown = new Error('value not present');
     const emptyInstance = Optional.empty();
 
-    expect(() => emptyInstance.get()).toThrow(error);
+    expect(() => emptyInstance.get()).toThrow(errorThrown);
   });
 });
